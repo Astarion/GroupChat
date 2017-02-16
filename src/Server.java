@@ -8,18 +8,23 @@ import java.net.Socket;
 public class Server {
     public static void main(String[] args) throws IOException {
         try {
-            ServerSocket serverSocket = new ServerSocket(1500);
+
+            Integer port = Integer.parseInt(args[0]);
+            ServerSocket serverSocket = new ServerSocket(port);
             Socket socket = serverSocket.accept();
             InputStream inputStream = socket.getInputStream();
             DataInputStream dataInputStream = new DataInputStream(inputStream);
-//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            String message = dataInputStream.readUTF();
-            System.out.println(message);
-//            System.out.println("Server is shutting down");
-        }
-        catch (Exception e)
-        {
-
+            String message;
+            while (true) {
+                message = dataInputStream.readUTF();
+                System.out.println(message);
+//                if (message.equals("quit")) {
+//                    System.out.println("Server is shutting down");
+//                    break;
+//                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
