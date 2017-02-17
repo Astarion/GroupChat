@@ -11,18 +11,22 @@ public class Server {
 
             Integer port = Integer.parseInt(args[0]);
             ServerSocket serverSocket = new ServerSocket(port);
-            Socket socket = serverSocket.accept();
-            InputStream inputStream = socket.getInputStream();
-            DataInputStream dataInputStream = new DataInputStream(inputStream);
-            String message;
             while (true) {
-                message = dataInputStream.readUTF();
-                System.out.println(message);
-//                if (message.equals("quit")) {
-//                    System.out.println("Server is shutting down");
-//                    break;
-//                }
+                Socket socket = serverSocket.accept();
+                Thread thread = new Thread(new Session(socket));
+                thread.start();
             }
+//            InputStream inputStream = socket.getInputStream();
+//            DataInputStream dataInputStream = new DataInputStream(inputStream);
+//            String message;
+//            while (true) {
+//                message = dataInputStream.readUTF();
+//                System.out.println(message);
+////                if (message.equals("quit")) {
+////                    System.out.println("Server is shutting down");
+////                    break;
+////                }
+//            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,3 +34,5 @@ public class Server {
 
     }
 }
+// Сделать счетчик, который контролирует количество одновременных подключений
+// Если пытаается подключиться, когда нет места, ему выводится сообщение "Подожди"
