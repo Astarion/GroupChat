@@ -1,6 +1,7 @@
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -8,9 +9,12 @@ import java.net.Socket;
  */
 public class Session implements Runnable {
     Socket socket;
-    public Session(Socket socket)
+    ServerSocket serverSocket;
+    public Session(Socket socket, ServerSocket serverSocket)
     {
         this.socket = socket;
+        this.serverSocket = serverSocket;
+
     }
     @Override
     public void run() {
@@ -25,7 +29,10 @@ public class Session implements Runnable {
                 System.out.println(message);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("connection interrupted");
+        }
+        finally {
+            Server.threadStop();
         }
 
     }

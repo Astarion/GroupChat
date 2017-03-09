@@ -2,7 +2,11 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.IllegalFormatException;
 
 /**
  * Created by 14Malgavka on 10.02.2017.
@@ -13,6 +17,7 @@ public class Client {
         try {
             String host = args[0];
             Integer port = Integer.parseInt(args[1]);
+
             Socket socket = new Socket(host, port);
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -26,8 +31,25 @@ public class Client {
                     break;
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (NumberFormatException e) {
+
+            System.out.println("Wrong params in Client");
+        }
+        catch(IllegalArgumentException e)
+        {
+            System.out.println("Illegal argument: " + e.getMessage());
+        }
+        catch (UnknownHostException e)
+        {
+            System.out.println("Problem with host occured: " + e.getMessage() + "\nEnter correct host address");
+        }
+        catch (ConnectException e)
+        {
+            System.out.println("Connection problem occured:\n" + e.getMessage());
+        }
+        catch (SocketException e)
+        {
+            System.out.println("Connection was closed by server:\n" + e.getMessage());
         }
 
 
