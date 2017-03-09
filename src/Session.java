@@ -30,6 +30,7 @@ public class Session implements Runnable {
             }
         } catch (IOException e) {
             System.out.println("connection interrupted");
+            return;
         }
         finally {
             Server.threadStop();
