@@ -9,11 +9,11 @@ import java.net.Socket;
  */
 public class Session implements Runnable {
     Socket socket;
-    ServerSocket serverSocket;
-    public Session(Socket socket, ServerSocket serverSocket)
+    Server server;
+    public Session(Socket socket)
     {
         this.socket = socket;
-        this.serverSocket = serverSocket;
+//        this.server = server;
 
     }
     @Override
@@ -25,11 +25,15 @@ public class Session implements Runnable {
             String message;
             while (true) {
                 message = dataInputStream.readUTF();
+                if(message.equals("quit"))
+                {
+                    return;
+                }
 
                 System.out.println(message);
             }
         } catch (IOException e) {
-            System.out.println("connection interrupted");
+            System.out.println("Connection interrupted");
             return;
         }
         finally {

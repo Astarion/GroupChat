@@ -17,20 +17,20 @@ public class Client {
 
             Socket socket = new Socket(host, port);
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+//            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
             String str;
-            String messageFromServer;
-            messageFromServer = dataInputStream.readUTF();
-            System.out.println(messageFromServer);
-            if (messageFromServer == "Server is busy now, try later!")
-                return;
+//            String messageFromServer;
+//            messageFromServer = dataInputStream.readUTF();
+//            System.out.println(messageFromServer);
+
             while (true) {
 
                 str = bufferedReader.readLine();
                 dataOutputStream.writeUTF(str);
                 if (str.equals("quit")) {
                     System.out.println("Client's connection was closed");
+                    socket.close();
                     break;
                 }
 
