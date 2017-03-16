@@ -19,24 +19,16 @@ public class Server {
             ServerSocket serverSocket = new ServerSocket(port);
 
             while (true) {
-                if (sessionCounter < maxSessionCount) {
-                    Socket socket = serverSocket.accept();
-                    Thread thread = new Thread(new Session(socket));
-                    thread.start();
-                    synchronized (lock) {
-                        sessionCounter++;
-                        System.out.println("Number of sessions: " + sessionCounter);
-                    }
-                } else {
-                    synchronized (lock) {
+                Socket socket = serverSocket.accept();
+                synchronized (lock) {
+                    if (sessionCounter >= maxSessionCount)
                         lock.wait();
-                    }
-//                    Socket socket = serverSocket.accept();
-//                    DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-//                    dataOutputStream.writeUTF("Server is busy now, try later!");
-//
-//                    socket.close();
+                    sessionCounter++;
+                    System.out.println("Number of sessions: " + sessionCounter);
                 }
+
+                Thread thread = new Thread(new Session(socket));
+                thread.start();
             }
         } catch (SocketException e) {
             System.out.println("Some problems: " + e.getMessage());
