@@ -14,18 +14,11 @@ public class Client {
         try {
             String host = args[0];
             Integer port = Integer.parseInt(args[1]);
-
             Socket socket = new Socket(host, port);
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-//            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
             String str;
-//            String messageFromServer;
-//            messageFromServer = dataInputStream.readUTF();
-//            System.out.println(messageFromServer);
-
             while (true) {
-
                 str = bufferedReader.readLine();
                 dataOutputStream.writeUTF(str);
                 if (str.equals("quit")) {
@@ -33,7 +26,6 @@ public class Client {
                     socket.close();
                     break;
                 }
-
             }
         } catch (NumberFormatException e) {
 
