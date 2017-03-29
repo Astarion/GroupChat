@@ -6,15 +6,18 @@ import com.sun.xml.internal.bind.v2.model.annotation.RuntimeAnnotationReader;
 public class Dispatcher implements Runnable {
 
     private final Channel channel;
-    public Dispatcher(Channel channel) {
+    private ThreadPool threadPool;
+    public Dispatcher(Channel channel, ThreadPool threadPool) {
+
         this.channel = channel;
+        this.threadPool = threadPool;
     }
     @Override
     public void run() {
         while(true){
             Runnable session = channel.take();
-            Thread thread = new Thread(session);
-            thread.start();
+            threadPool.execute(session);
+
         }
     }
 }

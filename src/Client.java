@@ -9,7 +9,8 @@ import java.util.IllegalFormatException;
  * Created by 14Malgavka on 10.02.2017.
  */
 public class Client {
-    public static void main(String[] args) throws IOException {
+
+    public static void  main(String[] args) throws IOException {
 
         try {
             String host = args[0];
@@ -49,7 +50,7 @@ public class Client {
         }
         catch (SocketException e)
         {
-            System.out.println("Connection was closed by server:\n" + e.getMessage());
+            System.out.println("Connection was closed by host:\n" + e.getMessage());
             return;
         }
 

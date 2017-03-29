@@ -32,11 +32,19 @@ public class Channel {
             try {
                 while (queue.isEmpty())
                     lock.wait();
-                lock.notifyAll();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            lock.notifyAll();
             return queue.removeFirst();
+        }
+    }
+
+    public Integer getSize()
+    {
+        synchronized (lock)
+        {
+            return queue.size();
         }
     }
 }
