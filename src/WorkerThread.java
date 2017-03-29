@@ -26,8 +26,8 @@ public class WorkerThread implements Runnable {
                     }
             }
             currentTask.run();
-            //Если нет задачи для выполнением, ждем
-            //Если есть выполняем
+            //Если нет задачи для выполнения, ждем
+            //Если есть, выполняем
             currentTask = null;
             threadPool.onTaskCompletetd(this);
         }
