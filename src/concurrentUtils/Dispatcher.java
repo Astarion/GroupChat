@@ -1,4 +1,6 @@
-import com.sun.xml.internal.bind.v2.model.annotation.RuntimeAnnotationReader;
+package concurrentUtils;
+
+import concurrentUtils.Channel;
 
 /**
  * Created by Alex on 17.03.2017.
@@ -17,7 +19,6 @@ public class Dispatcher implements Runnable {
         while(true){
             Runnable session = channel.take();
             threadPool.execute(session);
-
         }
     }
 }

@@ -1,4 +1,8 @@
-import javax.management.relation.RelationNotFoundException;
+package concurrentUtils;
+
+import concurrentUtils.Channel;
+import concurrentUtils.WorkerThread;
+
 import java.util.LinkedList;
 
 /**
@@ -8,7 +12,7 @@ public class ThreadPool {
     private LinkedList<Runnable> allWorkers;
     private Channel freeWorkers;
     private Integer maxSize;
-    private Object lock = new Object();
+    private final Object lock = new Object();
 
     public ThreadPool(Integer maxSize) {
         if (maxSize < 0) {
@@ -25,7 +29,7 @@ public class ThreadPool {
     public void execute(Runnable task) {
         if (freeWorkers.getSize() == 0) {
             synchronized (lock) {
-                if (freeWorkers.getSize() == 0) {
+                {
                     if (allWorkers.size() < maxSize) {
                         WorkerThread workerThread = new WorkerThread(this);
                         allWorkers.addLast(workerThread);
@@ -35,7 +39,7 @@ public class ThreadPool {
             }
         }
 
-        //Already synchronized in Channel
+        //Already synchronized in concurrentUtils.Channel
         ((WorkerThread) freeWorkers.take()).execute(task);
     }
 

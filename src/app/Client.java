@@ -1,3 +1,5 @@
+package app;
+
 import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
@@ -10,7 +12,7 @@ import java.util.IllegalFormatException;
  */
 public class Client {
 
-    public static void  main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
         try {
             String host = args[0];
@@ -23,35 +25,21 @@ public class Client {
                 str = bufferedReader.readLine();
                 dataOutputStream.writeUTF(str);
                 if (str.equals("quit")) {
-                    System.out.println("Client's connection was closed");
+                    System.out.println("app.Client's connection was closed");
                     socket.close();
                     break;
                 }
             }
         } catch (NumberFormatException e) {
-
-            System.out.println("Wrong params in Client");
-            return;
-        }
-        catch(IllegalArgumentException e)
-        {
+            System.out.println("Wrong params in app.Client");
+        } catch (IllegalArgumentException e) {
             System.out.println("Illegal argument: " + e.getMessage());
-            return;
-        }
-        catch (UnknownHostException e)
-        {
+        } catch (UnknownHostException e) {
             System.out.println("Problem with host occured: " + e.getMessage() + "\nEnter correct host address");
-            return;
-        }
-        catch (ConnectException e)
-        {
+        } catch (ConnectException e) {
             System.out.println("Connection problem occured:\n" + e.getMessage());
-            return;
-        }
-        catch (SocketException e)
-        {
+        } catch (SocketException e) {
             System.out.println("Connection was closed by host:\n" + e.getMessage());
-            return;
         }
 
 
