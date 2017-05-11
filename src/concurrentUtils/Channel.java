@@ -13,7 +13,7 @@ public class Channel {
     private final Object lock = new Object();
 
     public Channel(int maxCounter) {
-        this.maxCounter = maxCounter-2;
+        this.maxCounter = maxCounter;
     }
 
     public void put(Runnable x) {

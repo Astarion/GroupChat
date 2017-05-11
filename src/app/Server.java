@@ -13,6 +13,7 @@ import netUtils.*;
 public class Server {
     public static void main(String[] args) {
         try {
+
             MessageHandlerFactory messageHandlerFactory;
             String messageHandlerImpl = args[2];
             Class classFactory = Class.forName(messageHandlerImpl);
@@ -29,6 +30,12 @@ public class Server {
             Dispatcher dispatcher = new Dispatcher(channel, threadPool);
             Thread dispatcherThread = new Thread(dispatcher);
             dispatcherThread.start();
+            Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+                host.stop();
+                dispatcher.stop();
+                threadPool.stop();
+            }));
+
 
         } catch (NumberFormatException e) {
             System.out.println("Invalid format of an argument: " + e.getMessage());

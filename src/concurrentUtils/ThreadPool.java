@@ -43,7 +43,14 @@ public class ThreadPool {
         ((WorkerThread) freeWorkers.take()).execute(task);
     }
 
-    void onTaskCompletetd(WorkerThread workerThread) {
+    public void onTaskCompletetd(WorkerThread workerThread) {
         freeWorkers.put(workerThread);
+    }
+
+    public void stop()
+    {
+        for(int i = 0; i < allWorkers.size(); i++)
+            ((WorkerThread)allWorkers.get(i)).stop();
+        //По всем воркерам и для всех них stop()
     }
 }

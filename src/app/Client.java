@@ -5,6 +5,7 @@ import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.util.IllegalFormatException;
 
 /**
@@ -18,12 +19,21 @@ public class Client {
             String host = args[0];
             Integer port = Integer.parseInt(args[1]);
             Socket socket = new Socket(host, port);
+//            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
             String str;
+//            String messageFromHost;
             while (true) {
                 str = bufferedReader.readLine();
                 dataOutputStream.writeUTF(str);
+//                messageFromHost = dataInputStream.readUTF();
+//                if (messageFromHost.equals("Server stopped")) {
+//                    System.out.println(messageFromHost);
+//                    break;
+//                }
+
                 if (str.equals("quit")) {
                     System.out.println("app.Client's connection was closed");
                     socket.close();
@@ -45,3 +55,6 @@ public class Client {
 
     }
 }
+//ДЗ: изучить интерфейсы BlockingQueue
+//Доделать методы Stop(), применяя флаг isActive и в диспетчере и в хосте
+//Должен ли быть isAlive volatile или нет
