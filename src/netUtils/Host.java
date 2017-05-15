@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 /**
  * Created by 14Malgavka on 10.02.2017.
@@ -18,6 +19,7 @@ public class Host implements Stoppable {
     private ServerSocket serverSocket;
     private MessageHandlerFactory messageHandlerFactory;
     private volatile boolean isActive;
+    private ArrayList<Socket> allClients = new ArrayList<Socket>();
 
     public Host(Integer port, Channel channel, MessageHandlerFactory messageHandlerFactory) {
         this.port = port;
@@ -36,7 +38,8 @@ public class Host implements Stoppable {
         try {
             while (isActive) {
                 Socket socket = serverSocket.accept();
-                channel.put(new Session(socket, messageHandlerFactory.createMessageHandler()));
+                channel.put(new Session(socket, messageHandlerFactory.createMessageHandler(this)));
+                allClients.add(socket);
             }
         } catch (SocketException e) {
             System.out.println("Some problems: " + e.getMessage());
@@ -55,5 +58,10 @@ public class Host implements Stoppable {
             e.printStackTrace();
         }
 
+    }
+
+    public ArrayList<Socket> getAllClients()
+    {
+        return allClients;
     }
 }

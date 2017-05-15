@@ -1,21 +1,20 @@
 package app;
 
-import app.PrintMessageHandler;
 import netUtils.Host;
 import netUtils.MessageHandler;
 import netUtils.MessageHandlerFactory;
 
 /**
- * Created by Alex on 31.03.2017.
+ * Created by Alex on 12.05.2017.
  */
-public class PrintMessageHandlerFactory implements MessageHandlerFactory {
+public class SendClientMessageHandlerFactory implements MessageHandlerFactory {
     @Override
     public MessageHandler createMessageHandler() {
-        return new PrintMessageHandler();
+        return null;
     }
 
     @Override
     public MessageHandler createMessageHandler(Host host) {
-        return null;
+        return new SendClientsMessageHandler(host);
     }
 }

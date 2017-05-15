@@ -5,4 +5,5 @@ package netUtils;
  */
 public interface MessageHandlerFactory {
     MessageHandler createMessageHandler();
+    MessageHandler createMessageHandler(Host host);
 }

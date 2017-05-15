@@ -19,16 +19,16 @@ public class Client {
             String host = args[0];
             Integer port = Integer.parseInt(args[1]);
             Socket socket = new Socket(host, port);
-//            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
             String str;
-//            String messageFromHost;
+            Thread threadForListeningOutput = new Thread(new ClientListener(socket));
+            threadForListeningOutput.start();
             while (true) {
                 str = bufferedReader.readLine();
                 dataOutputStream.writeUTF(str);
-//                messageFromHost = dataInputStream.readUTF();
 //                if (messageFromHost.equals("Server stopped")) {
 //                    System.out.println(messageFromHost);
 //                    break;
